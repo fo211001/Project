@@ -7,7 +7,7 @@
     <file path="/Слоги.py" changelist="4ce73240-0e79-43ff-b4c7-b964311eab55" time="1372660400345" ignored="false" />
     <file path="/Couplet.py" changelist="4ce73240-0e79-43ff-b4c7-b964311eab55" time="1372742759301" ignored="false" />
     <file path="/Song.py" changelist="4ce73240-0e79-43ff-b4c7-b964311eab55" time="1372744364757" ignored="false" />
-    <file path="/Main.py" changelist="4ce73240-0e79-43ff-b4c7-b964311eab55" time="1372758895687" ignored="false" />
+    <file path="/Main.py" changelist="4ce73240-0e79-43ff-b4c7-b964311eab55" time="1372908159349" ignored="false" />
     <file path="/Part.py" changelist="4ce73240-0e79-43ff-b4c7-b964311eab55" time="1372663984365" ignored="false" />
     <file path="/Word.py" changelist="4ce73240-0e79-43ff-b4c7-b964311eab55" time="1372742823351" ignored="false" />
     <file path="/String.py" changelist="4ce73240-0e79-43ff-b4c7-b964311eab55" time="1372742807800" ignored="false" />
@@ -24,7 +24,8 @@
     <file path="$USER_HOME$/PycharmProjects/test/1.py" changelist="4ce73240-0e79-43ff-b4c7-b964311eab55" time="1372776600653" ignored="false" />
     <file path="/1.py" changelist="4ce73240-0e79-43ff-b4c7-b964311eab55" time="1372776333753" ignored="false" />
     <file path="/parse.py" changelist="4ce73240-0e79-43ff-b4c7-b964311eab55" time="1372849450177" ignored="false" />
-    <file path="/distance.py" changelist="4ce73240-0e79-43ff-b4c7-b964311eab55" time="1372839434849" ignored="false" />
+    <file path="/distance.py" changelist="4ce73240-0e79-43ff-b4c7-b964311eab55" time="1372907951062" ignored="false" />
+    <file path="/all_chords.py" changelist="4ce73240-0e79-43ff-b4c7-b964311eab55" time="1372908241663" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,10 +45,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="song_part.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="song_part.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/song/song_part.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="24" selection-start="77" selection-end="88" vertical-scroll-proportion="0.0">
+            <state line="30" column="0" selection-start="540" selection-end="540" vertical-scroll-proportion="1.424581">
               <folding />
             </state>
           </provider>
@@ -74,8 +75,10 @@
       <file leaf-file-name="Main.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="0" selection-start="79" selection-end="79" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="30" column="42" selection-start="961" selection-end="961" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#23#49#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -83,16 +86,16 @@
       <file leaf-file-name="all_chords.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/song/all_chords.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="29" selection-start="29" selection-end="29" vertical-scroll-proportion="0.0">
+            <state line="16" column="19" selection-start="650" selection-end="650" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="parse.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="parse.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/song/parse.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="140" column="0" selection-start="4066" selection-end="4066" vertical-scroll-proportion="4.112903">
+            <state line="94" column="72" selection-start="2737" selection-end="2737" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -110,8 +113,10 @@
       <file leaf-file-name="distance.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/song/distance.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="26" selection-start="293" selection-end="293" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="0" column="22" selection-start="22" selection-end="22" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#23#80#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -135,7 +140,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/Word.py" />
         <option value="$PROJECT_DIR$/Song.py" />
         <option value="$PROJECT_DIR$/couplet.py" />
         <option value="$PROJECT_DIR$/word.py" />
@@ -145,12 +149,13 @@
         <option value="$PROJECT_DIR$/song.py" />
         <option value="$PROJECT_DIR$/EndOfLine.py" />
         <option value="$PROJECT_DIR$/song_part.py" />
-        <option value="$PROJECT_DIR$/Main.py" />
-        <option value="$PROJECT_DIR$/song/distance.py" />
-        <option value="$PROJECT_DIR$/song/all_chords.py" />
         <option value="$PROJECT_DIR$/song/chord.py" />
         <option value="$PROJECT_DIR$/song/parse.py" />
         <option value="$PROJECT_DIR$/song/couplet.py" />
+        <option value="$PROJECT_DIR$/song/distance.py" />
+        <option value="$PROJECT_DIR$/Main.py" />
+        <option value="$PROJECT_DIR$/song/all_chords.py" />
+        <option value="$PROJECT_DIR$/song/song_part.py" />
       </list>
     </option>
   </component>
@@ -226,12 +231,12 @@
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="recentsLimit" value="5" />
     <property name="options.lastSelected" value="settings.github" />
+    <property name="recentsLimit" value="5" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="FullScreen" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -359,17 +364,17 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17727272" sideWeight="0.6541096" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18030304" sideWeight="0.6552901" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39965987" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3458904" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3447099" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -453,7 +458,9 @@
     <entry file="file://$PROJECT_DIR$/song/distance.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="8" column="26" selection-start="293" selection-end="293" vertical-scroll-proportion="0.0">
-          <folding />
+          <folding>
+            <element signature="e#23#80#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -467,7 +474,9 @@
     <entry file="file://$PROJECT_DIR$/Main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="8" column="42" selection-start="252" selection-end="252" vertical-scroll-proportion="0.0">
-          <folding />
+          <folding>
+            <element signature="e#23#49#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -492,44 +501,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/song/distance.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="26" selection-start="293" selection-end="293" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/word.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="5" column="3" selection-start="78" selection-end="588" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/song/chord.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="0" selection-start="308" selection-end="308" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/song/song_part.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="24" selection-start="77" selection-end="88" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/song/all_chords.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="29" selection-start="29" selection-end="29" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="0" selection-start="79" selection-end="79" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -550,7 +524,46 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/song/parse.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="140" column="0" selection-start="4066" selection-end="4066" vertical-scroll-proportion="4.112903">
+        <state line="94" column="72" selection-start="2737" selection-end="2737" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/song/chord.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="0" selection-start="308" selection-end="308" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/song/distance.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="22" selection-start="22" selection-end="22" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#23#80#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/song/all_chords.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="19" selection-start="650" selection-end="650" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="42" selection-start="961" selection-end="961" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#23#49#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/song/song_part.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="0" selection-start="540" selection-end="540" vertical-scroll-proportion="1.424581">
           <folding />
         </state>
       </provider>

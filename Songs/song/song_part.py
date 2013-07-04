@@ -1,5 +1,6 @@
 #-*- coding: utf-8 -*-
 
+
 class SongPart(object):
     
     def __init__(self,  syllable="", chord=None):
@@ -13,11 +14,25 @@ class SongPart(object):
     @property
     def syllable (self):
         return self._syllable
-    
+
+    @property
+    def is_space(self):
+        return not len(self.syllable)
+
+
 class Space (SongPart):
     def __init__(self):
         super(Space, self).__init__(" ")
-        
+
+    @property
+    def is_space(self):
+        return True
+
+
 class EndOfLine (SongPart):
     def __init__(self):
         super(EndOfLine, self).__init__("\n")
+
+    @property
+    def is_space(self):
+        return True
