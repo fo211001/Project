@@ -5,7 +5,7 @@ from song.couplet import Couplet
 from song.song_part import SongPart, Space, EndOfLine
 from song.distance import semitone_distance, get_chord
 
-#trololololo
+#test test
 
 def help():
     return "read - прочитать песню из файла\n" \
