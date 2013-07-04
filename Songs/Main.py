@@ -6,6 +6,7 @@ from song.song_part import SongPart, Space, EndOfLine
 from song.distance import semitone_distance, get_chord
 from song.parse import parse_text
 
+
 def help():
     return "read - прочитать песню из файла\n" \
            + "input - ввести песню самостоятельно\n" \
