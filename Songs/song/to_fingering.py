@@ -24,3 +24,11 @@ def dict_with_fingering():
         dict[chords[i]] = all_fingering[i]
         i += 1
     return dict
+
+
+def return_fingerings_from_chords(names_chords):
+    d = dict_with_fingering()
+    fingerings = []
+    for chord in names_chords:
+        fingerings.append(d.get(chord))
+    return fingerings

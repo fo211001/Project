@@ -5,6 +5,7 @@ from song.couplet import Couplet
 from song.song_part import SongPart, Space, EndOfLine
 from song.distance import semitone_distance, get_chord
 from song.parse import parse_text
+from song.to_fingering import return_fingerings_from_chords
 
 
 def help():
@@ -62,8 +63,13 @@ if __name__ == "__main__":
             song = parse_text(text)
             print_song(song, song.base_chord)
         elif command == "fingering":
-            chord = Chord(3, "m", "B")
-            print chord.fingering
+            print "Введите список имен аккордов"
+            names_chords = list(raw_input())
+            list_fing = return_fingerings_from_chords(names_chords)
+            for fing in list_fing:
+                if fing:
+                    print fing
+                    print ""
             #song = Song("A", [Couplet([SongPart(u"как", Chord(3, "sus7"))])])
             #couplets = song.couplets
             #part = couplets[0].song_parts
