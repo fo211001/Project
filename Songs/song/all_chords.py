@@ -8,7 +8,7 @@ all_chord_types = ["", "m", "7", "m7", "mmaj7", "m+7", "maj7", "+7", "m7b5",
 
 all_chord_tones = ["A", "B", "H", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"]
 
-tones_indexed = { x: i for i, x in enumerate(all_chord_tones)}
+tones_indexed = {x: i for i, x in enumerate(all_chord_tones)}
 
 all_chords = set(["{}{}".format(x, y) for x, y in product(all_chord_tones, all_chord_types)])
 
