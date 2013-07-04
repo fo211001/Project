@@ -5,10 +5,6 @@ from song.couplet import Couplet
 from song.song_part import SongPart, Space, EndOfLine
 from song.distance import semitone_distance, get_chord
 
-#olololdasghdzas\zdfkngdflerkfbnm,erklnmdfklwer;gxnm, fgkrl;wdmwef;erl'w;kfhmjdgler;'tk
-
-"hello, world!"
-"print messege"
 
 def help():
     return "read - прочитать песню из файла\n" \
