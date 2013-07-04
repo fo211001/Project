@@ -25,10 +25,11 @@ def get_tone(chord):
 
 
 def get_modif(chord):
-    if "#" in chord:
-        return chord[2, -1]
+    if u"#" in chord:
+        return chord[2: 0]
     else:
-        return chord[1, -1]
+        mod = chord[1: len(chord)]
+        return mod
 
 
 

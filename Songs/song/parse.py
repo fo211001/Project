@@ -7,7 +7,8 @@ from song import Song
 from couplet import Couplet
 from all_chords import all_chord_types, all_chords, all_chord_tones, tones_indexed, get_modif, get_tone
 
-vowels = ['а', 'е', 'ё', 'и', 'о', 'у', 'ы', 'э', 'ю', 'я']
+vowels = [u'а', u'е', u'ё', u'и', u'о', u'у', u'ы', u'э', u'ю', u'я',
+          u'А', u'Е', u'Ё', u'И', u'О', u'У', u'Ы', u'Э', u'Ю', u'Я']
 
 
 def parse_text(text):
@@ -36,7 +37,6 @@ def get_base_chord(text):
 def parse_to_syl(word):
     listSyllables = []
     temp_str = ""
-    print word[0]
     for i in word[0]:
         if i in vowels:
             temp_str += i
@@ -44,11 +44,12 @@ def parse_to_syl(word):
             temp_str = ""
         else:
             temp_str += i
-            if i == word[-1] or i == '-':
-                listSyllables += temp_str
+            if i == word[0][-1] or i == '-':
+                last_syl = listSyllables.pop()
+                listSyllables.append(last_syl + temp_str)
                 temp_str = ""
-    # for j in listSyllables:
-    #     print j
+    for j in listSyllables:
+        print j
     return listSyllables
 
 
@@ -81,6 +82,7 @@ def parse_to_list_of_string(base_chord, string):
     temp_str = ""
     list_of_strings = []
     for i in string.split('\n'):
+        temp_str = ""
         word_list = []
         pos = 0
         for j in i:
@@ -91,6 +93,7 @@ def parse_to_list_of_string(base_chord, string):
             else:
                 if not temp_str == "":
                     word_list.append((temp_str, pos - len(temp_str) + 1))
+                    temp_str = ""
             pos += 1
         #проверим - строка с аккордами?
         is_chord = True
@@ -106,7 +109,7 @@ def parse_to_list_of_string(base_chord, string):
         else:
             syl_list = []
             for words in word_list:
-                print words
+                #print words
                 syl_list.append(parse_to_syl(words))
                 syl_list.append(
                     (Space(), words[1]+len(words[0]))
