@@ -4,10 +4,13 @@ from all_chords import get_tone
 
 
 class Chord(object):
-    def __init__(self, dist, modif="", base_chord=""):
+    def __init__(self, dist, modif=""):
         self._distance = dist
         self._modification = modif
-        self._fingering = self.set_fingering(base_chord)
+  #      self._fingering = self.set_fingering(base_chord)
+
+    def __repr__(self):
+        return u"{}.{}".format(self.distance, self.modification)
         
     @property
     def distance(self):

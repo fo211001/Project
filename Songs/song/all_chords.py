@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 from itertools import product
 
 all_chord_types = ["", "m", "7", "m7", "mmaj7", "m+7", "maj7", "+7", "m7b5",
@@ -6,11 +7,12 @@ all_chord_types = ["", "m", "7", "m7", "mmaj7", "m+7", "maj7", "+7", "m7b5",
               "mb5", "m-5", "mdim", "6", "m6", "6/9", "m6/9", "9", "11",
               "13", "add9", "madd9"]
 
+# TODO: добавить все диезы и бимоли
 all_chord_tones = ["A", "B", "H", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"]
 
 tones_indexed = {x: i for i, x in enumerate(all_chord_tones)}
 
-all_chords = set(["{}{}".format(x, y) for x, y in product(all_chord_tones, all_chord_types)])
+all_chords = set(["{}{}".format(x, y).lower() for x, y in product(all_chord_tones, all_chord_types)])
 
 
 def get_all_chord_tones():
@@ -19,17 +21,17 @@ def get_all_chord_tones():
 
 def get_tone(chord):
     if u"#" in chord:
-        return chord[0, 1]
+        return chord[0: 1]
     else:
         return chord[0]
 
 
 def get_modif(chord):
     if u"#" in chord:
-        return chord[2: 0]
+        return chord[2:]
     else:
-        mod = chord[1: len(chord)]
-        return mod
+         return chord[1: ]
+
 
 
 
