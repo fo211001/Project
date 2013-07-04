@@ -45,7 +45,10 @@ def parse_to_syl(word):
         else:
             temp_str += i
             if i == word[0][-1] or i == '-':
-                last_syl = listSyllables.pop()
+                if not len(listSyllables) == 0:
+                    last_syl = listSyllables.pop()
+                else:
+                    last_syl = ""
                 listSyllables.append(last_syl + temp_str)
                 temp_str = ""
     for j in listSyllables:
@@ -137,6 +140,12 @@ def parts_of_string(string):
 
 
 def chords_only(string):
+    """
+    Проверяем, в строке только аккорды?
+    :param string:
+    :return: False - если в строке есть что-нибудь кроме аккордов,
+    иначе True
+    """
     for chord in string:
         if not isinstance(chord[0], Chord):
             return False
