@@ -7,6 +7,8 @@ from song.distance import semitone_distance, get_chord
 
 #olololdasghdzas\zdfkngdflerkfbnm,erklnmdfklwer;gxnm, fgkrl;wdmwef;erl'w;kfhmjdgler;'tk
 
+"hello, world!"
+
 def help():
     return "read - прочитать песню из файла\n" \
            + "input - ввести песню самостоятельно\n" \
