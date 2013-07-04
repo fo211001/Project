@@ -18,7 +18,7 @@ def get_all_chord_tones():
 
 
 def get_tone(chord):
-    if "#" in chord:
+    if u"#" in chord:
         return chord[0, 1]
     else:
         return chord[0]

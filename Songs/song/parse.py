@@ -7,11 +7,13 @@ from song import Song
 from couplet import Couplet
 from all_chords import all_chord_types, all_chords, all_chord_tones, tones_indexed, get_modif, get_tone
 
+vowels = ['а', 'е', 'ё', 'и', 'о', 'у', 'ы', 'э', 'ю', 'я']
+
 
 def parse_text(text):
     list_of_couplets_text = parse_to_couplet_text(text)
     list_of_couplets = []
-    for i in list_of_couplets_text():
+    for i in list_of_couplets_text:
         list_of_string = parse_to_list_of_string(get_base_chord(text), i)
 
         list_of_couplets.append(Couplet(list(create_couplet(list_of_string))))
@@ -22,28 +24,31 @@ def parse_text(text):
 def get_base_chord(text):
     temp_str = ""
     for i in text:
-        if not i == " " or not i == "\n":
+        if not i == u" " and not i == u"\n":
             temp_str += i
         elif temp_str in all_chords:
             return get_tone(temp_str)
+        else:
+            temp_str = ""
     return None
 
 
 def parse_to_syl(word):
     listSyllables = []
     temp_str = ""
-    for i in word:
-        if i in "аеёиоуыэюя":
+    print word[0]
+    for i in word[0]:
+        if i in vowels:
             temp_str += i
             listSyllables.append(temp_str)
-            tempStr = ""
+            temp_str = ""
         else:
             temp_str += i
             if i == word[-1] or i == '-':
-                listSyllables[-1] += temp_str
+                listSyllables += temp_str
                 temp_str = ""
-    for j in listSyllables:
-        print j
+    # for j in listSyllables:
+    #     print j
     return listSyllables
 
 
@@ -52,16 +57,16 @@ def parse_to_couplet_text(song):
     couplet = ""
     i = 0
     while i < len(song):
-       if song[i] == "\n" or song[i] == "\r\n":
-           couplet += song[i]
-           if i+1 < len(song):
-               if song[i+1] == "\n" or song[i+1] == "\r\n":
-                   if not couplet == "":
-                       list_couplets.append(couplet)
-                       couplet = ""
-       else:
-           couplet += song[i]
-       i += 1
+        if song[i] == "\n" or song[i] == "\r\n" or song[i] == "\n\r":
+            couplet += song[i]
+            if i+1 < len(song):
+                if song[i+1] == "\n" or song[i+1] == "\r\n":
+                    if not couplet == "":
+                        list_couplets.append(couplet)
+                        couplet = ""
+        else:
+            couplet += song[i]
+        i += 1
     if not couplet == "":
         list_couplets.append(couplet)
     return list_couplets
@@ -73,16 +78,19 @@ def parse_to_list_of_string(base_chord, string):
     :param base_chord:
     :param string:
     """
-    temp_str=""
+    temp_str = ""
     list_of_strings = []
     for i in string.split('\n'):
         word_list = []
         pos = 0
         for j in i:
-            if not j == " " or pos == len(i)-1:
+            if not j == " ":
                 temp_str += j
+                if pos == len(i)-1:
+                    word_list.append((temp_str, pos - len(temp_str) + 1))
             else:
-                word_list.append((temp_str, len(temp_str) - pos + 1))
+                if not temp_str == "":
+                    word_list.append((temp_str, pos - len(temp_str) + 1))
             pos += 1
         #проверим - строка с аккордами?
         is_chord = True
@@ -94,13 +102,16 @@ def parse_to_list_of_string(base_chord, string):
             for chords in word_list:
                 chord = Chord(semitone_distance(base_chord, chords[0]), get_modif(chords[0]))
                 chord_list.append((chord, chords[1]))
-            list_of_strings.append(chord)
+            list_of_strings += chord_list
         else:
             syl_list = []
             for words in word_list:
-                syl_list += parse_to_syl(words)
-                syl_list += Space()
-            list_of_strings.append(syl_list)
+                print words
+                syl_list.append(parse_to_syl(words))
+                syl_list.append(
+                    (Space(), words[1]+len(words[0]))
+                )
+            list_of_strings += syl_list
     return list_of_strings
 
 
@@ -133,8 +144,9 @@ def join_chords(chords, words):
     i, j = 0, 0
     while i < len(chords) and j < len(words):
         chord, word = chords[i], words[j]
+        #print word+"-----"
         cpos, wpos, wlen = chord[1], word[1], len(word[0])
-        if cpos >= wpos and cpos < wpos + wlen:
+        if cpos >= wpos and cpos < (wpos + wlen):
             j += 1
             i += 1
             yield SongPart(word[0], chord[0])
@@ -152,6 +164,6 @@ def join_chords(chords, words):
 
     while j < len(words):
         j += 1
-        yield SongPart(words[j][0])
+        yield SongPart((words[j])[0])
 
 
