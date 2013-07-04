@@ -8,11 +8,11 @@ class SongPart(object):
         self._syllable = syllable
         
     @property
-    def chord (self):
+    def chord(self):
         return self._chord
     
     @property
-    def syllable (self):
+    def syllable(self):
         return self._syllable
 
     @property

@@ -1,7 +1,13 @@
+from to_fingering import dict_with_fingering
+from distance import get_chord
+from all_chords import get_tone
+
+
 class Chord(object):
-    def __init__(self, dist, modif=""):
+    def __init__(self, dist, modif="", base_chord=""):
         self._distance = dist
         self._modification = modif
+        self._fingering = self.set_fingering(base_chord)
         
     @property
     def distance(self):
@@ -11,9 +17,12 @@ class Chord(object):
     def modification(self):
         return self._modification
 
-    def set_fingering(self, fingering):
-        self._fingering = fingering
+    def set_fingering(self, base_chord):
+        d = dict_with_fingering()
+        name_chord = get_tone(get_chord(base_chord, self))
+        return d.get(name_chord)
 
     @property
     def fingering(self):
         return self._fingering
+

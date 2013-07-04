@@ -3,7 +3,7 @@
 
 class Song(object):
 
-    def __init__(self, base_chord, couplets = None):
+    def __init__(self, base_chord, couplets=None):
         self._couplets = couplets or []
         self._base_chord = base_chord
      

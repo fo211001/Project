@@ -61,6 +61,13 @@ if __name__ == "__main__":
             text = file.read().decode('utf-8')
             song = parse_text(text)
             print_song(song, song.base_chord)
+        elif command == "fingering":
+            chord = Chord(3, "m", "B")
+            print chord.fingering
+            #song = Song("A", [Couplet([SongPart(u"как", Chord(3, "sus7"))])])
+            #couplets = song.couplets
+            #part = couplets[0].song_parts
+            #print part[0].chord.fingering
         elif command == "input":
             text = raw_input("Введите песню\n")
             song = Song(text)
