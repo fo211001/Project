@@ -4,6 +4,7 @@ from song.chord import Chord
 from song.couplet import Couplet
 from song.song_part import SongPart, Space, EndOfLine
 from song.distance import semitone_distance, get_chord
+from song.to_fingering import fingering
 ##
 
 def help():
@@ -69,3 +70,4 @@ if __name__ == "__main__":
     print "Введите аккорд"
     chord = raw_input()
     print_song(song, chord)
+    print fingering(["A", "B", "H"], [(0,1,2,3,4,5), (0,1,0,1,0,2), (3,3,4,1,2,3)])

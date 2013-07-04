@@ -13,6 +13,10 @@ tones_indexed = { x: i for i, x in enumerate(all_chord_tones)}
 all_chords = set(["{}{}".format(x, y) for x, y in product(all_chord_tones, all_chord_types)])
 
 
+def get_all_chord_tones():
+    return all_chord_tones
+
+
 def get_tone(chord):
     if "#" in chord:
         return chord[0, 1]
@@ -21,7 +25,10 @@ def get_tone(chord):
 
 
 def get_modif(chord):
-    if chord[1]=="#":
-        return chord[0, 1]
+    if "#" in chord:
+        return chord[2, -1]
     else:
-        return chord[0]
+        return chord[1, -1]
+
+
+
