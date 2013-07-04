@@ -1,5 +1,4 @@
 #-*- coding: utf-8 -*-
-# проверка сьячждлсьяслдяч
 from song.song import Song
 from song.chord import Chord
 from song.couplet import Couplet
