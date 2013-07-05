@@ -1,4 +1,6 @@
 from all_chords import get_all_chord_tones
+from distance import semitone_distance
+from itertools import product
 
 # all_chord_tones = ["A", "B", "H", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"]
 
@@ -32,3 +34,76 @@ def return_fingerings_from_chords(names_chords):
     for chord in names_chords:
         fingerings.append(d.get(chord))
     return fingerings
+
+# ["E", "H", "G", "D", "A", "E"]
+# all_chord_tones = ["A", "B", "H", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"]
+
+
+def create_all_notes(line_up):
+    notes = get_all_chord_tones()
+    var_fing = []
+    fing_for_note = []
+    for note in notes:
+        for note_on_line in line_up:
+            num = semitone_distance(note_on_line, note)
+            if num < 0:
+                num += 12
+            fing_for_note.append(num)
+        for i in fing_for_note:
+            num2 = i + 12
+            if 11 < num2 < 15:
+                fing_for_note.append(num2)
+        var_fing.append(fing_for_note)
+        fing_for_note = []
+    print var_fing
+    return var_fing
+
+
+def finger(line_up):
+    all_fingering = create_all_notes(line_up)
+    i = 0
+    p = (["{} {}".format(x, y).lower() for x, y in product(all_fingering[0], all_fingering[0], all_fingering[0], all_fingering[0], all_fingering[0], all_fingering[0]])
+    for pri in p:
+        print pri
+        print ""
+
+#
+    # var_fing = []
+    # fing_for_note = []
+    # for note in notes:
+    #     for note_on_line in line_up:
+    #         num = semitone_distance(note_on_line, note)
+    #         if num < 0:
+    #             num += 12
+    #         fing_for_note.append(num)
+    #     var_fing.append(fing_for_note)
+    #     fing_for_note = []
+    #
+    # i = 0
+    # j = 0
+    # n = len(var_fing)
+    # #print var_fing
+    # list_fing = []
+    # fing = []
+    # while j <= (len(var_fing[0])/2):
+    #     l = 0
+    #     for k in range(0, i):
+    #             fing.append(0)
+    #     while i < n and l < len(var_fing):
+    #         var = var_fing[l]
+    #         fing.append(var[i])
+    #         i += 1
+    #         l += 1
+    #     for k in range(i, len(var_fing[0])):
+    #         fing.append(0)
+    #     n += 1
+    #     j += 1
+    #     i = j
+    #     list_fing.append(fing)
+    #     fing = []
+    # print list_fing
+        # while j < len(var):
+        #     fing.append(var[j])
+        #     j += 1
+
+
