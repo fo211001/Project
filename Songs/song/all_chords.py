@@ -29,7 +29,7 @@ def get_modif(chord):
     if u"#" in chord:
         return chord[2:]
     else:
-         return chord[1: ]
+        return chord[1:]
 
 
 
