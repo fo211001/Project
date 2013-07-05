@@ -31,9 +31,8 @@ def mus(chord):
 
     tone = get_tone(chord)
     mod = get_modif(chord)
-    print [shift_tone(tone, x)
+    return [shift_tone(tone, x)
             for x in modifications[mod]]
-mus("Asus2")
 
     #     tone = chord[0]
     #     mod = chord.modification
