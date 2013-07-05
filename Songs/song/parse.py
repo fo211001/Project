@@ -35,6 +35,7 @@ def parse_text(text):
         for tokens in couplet:
             optimized = list(make_chords(base_chord, tokens))
             optimized = optimize_tokens(optimized)
+            print optimized
             chorded_list.append(optimized)
         list_of_couplets.append(Couplet(list(create_couplet(chorded_list))))
 
@@ -145,7 +146,7 @@ def optimize_tokens(tokens):
         for word, pos in tokens:
             if isinstance(word, Chord):
                 optimized_tokens.append((word, pos))
-            elif not word.isspace():
+            elif not word.isspace() and word:
                 if optimized_tokens:
                     optimized_tokens.append((" ", pos-1))
                 for syl in parse_to_syl(word):
@@ -187,7 +188,7 @@ def chords_only(string):
     иначе True
     """
     for chord, pos in string:
-        if not isinstance(chord, Chord) and not chord.isspace():
+        if not isinstance(chord, Chord) and not chord.isspace() and chord:
             return False
     return True
 

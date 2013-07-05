@@ -1,9 +1,12 @@
 #-*- coding: utf-8 -*-
 
+from chord import Chord
 
 class SongPart(object):
     
     def __init__(self,  syllable="", chord=None):
+        if not isinstance(chord, Chord) and chord is not None:
+            raise TypeError("chord reequired, `{}` given".format(chord))
         self._chord = chord
         self._syllable = syllable
 
@@ -18,7 +21,9 @@ class SongPart(object):
     
     @property
     def syllable(self):
-        return self._syllable
+        if isinstance(self._syllable, unicode):
+            return self._syllable
+        return unicode(self._syllable, 'utf-8')
 
     @property
     def is_space(self):

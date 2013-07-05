@@ -21,10 +21,7 @@ sin_tones = {"Ab": 11, "Bb": 0, "Hb": 1, "Cb": 2, "Db": 4, "Eb": 6, "Fb": 7, "Gb
 
 
 def is_chord(chord_string):
-    if chord_string in all_chords or chord_string in all_sin:
-        return True
-    else:
-        False
+    return chord_string in all_chords or chord_string in all_sin
 
 
 def normal_view(chord_string):

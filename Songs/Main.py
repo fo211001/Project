@@ -50,6 +50,8 @@ def print_couplet(couplet, main_chord):
 
 def print_song(song, base_chord):
     for i in song.couplets:
+        # for part in i.song_parts:
+        #     print
         print print_couplet(i, base_chord)
 
 
