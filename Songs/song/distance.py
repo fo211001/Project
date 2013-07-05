@@ -1,6 +1,5 @@
 #-*- coding: utf-8 -*-
 from all_chords import get_tone, get_modif, tones_indexed
-from chord import Chord
 
 
 def semitone_distance(first_chord, second_chord):
@@ -9,9 +8,14 @@ def semitone_distance(first_chord, second_chord):
 
 
 def get_chord(base, chord):
-    "Возвращаем название аккорда "
+    "Возвращаем название аккорда"
     t = (tones_indexed[get_tone(base)] + chord.distance) % 12
-    return tones_indexed.keys()[t] + chord.modification
+    s = tones_indexed
+    for k in s.keys():
+        if s[k] == t:
+            return k + chord.modification
+    return
+    #return tones_indexed.keys()[t] + chord.modification
 
 
 

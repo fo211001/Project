@@ -7,25 +7,43 @@ from song import Song
 from couplet import Couplet
 from all_chords import all_chord_types, all_chords, all_chord_tones, tones_indexed, get_modif, get_tone
 
+vowels = [u'а', u'е', u'ё', u'и', u'о', u'у', u'ы', u'э', u'ю', u'я',
+          u'А', u'Е', u'Ё', u'И', u'О', u'У', u'Ы', u'Э', u'Ю', u'Я']
+
 
 def parse_text(text):
     list_of_couplets_text = parse_to_couplet_text(text)
     list_of_couplets = []
-    for i in list_of_couplets_text():
-        list_of_string = parse_to_list_of_string(get_base_chord(text), i)
+    list_of_couplets_tokens = []
 
-        list_of_couplets.append(Couplet(list(create_couplet(list_of_string))))
-    song = Song(get_base_chord(text), list_of_couplets)
+    for i in list_of_couplets_text:
+        list_of_strings = []
+        for line in i.splitlines():
+            tokens = list(tokenize(line))
+            list_of_strings.append(tokens)
+        list_of_couplets_tokens.append(list_of_strings)
+
+    base_chord = get_base_chord(list_of_couplets_tokens)
+
+    for couplet in list_of_couplets_tokens:
+        chorded_list = []
+        for tokens in couplet:
+            optimized = list(make_chords(base_chord, tokens))
+            optimized = optimize_tokens(optimized)
+            chorded_list.append(optimized)
+        list_of_couplets.append(Couplet(list(create_couplet(chorded_list))))
+
+    song = Song(base_chord, list_of_couplets)
     return song
 
 
-def get_base_chord(text):
-    temp_str = ""
-    for i in text:
-        if not i == " " or not i == "\n":
-            temp_str += i
-        elif temp_str in all_chords:
-            return get_tone(temp_str)
+def get_base_chord(list_of_couplets_tokens):
+    for couplet in list_of_couplets_tokens:
+        for tokens in couplet:
+            for token, pos in tokens:
+                if token.lower() in all_chords:
+                    return get_tone(token)
+
     return None
 
 
@@ -33,17 +51,20 @@ def parse_to_syl(word):
     listSyllables = []
     temp_str = ""
     for i in word:
-        if i in "аеёиоуыэюя":
+        if i in vowels:
             temp_str += i
             listSyllables.append(temp_str)
-            tempStr = ""
+            temp_str = ""
         else:
             temp_str += i
             if i == word[-1] or i == '-':
-                listSyllables[-1] += temp_str
+                if not len(listSyllables) == 0:
+                    last_syl = listSyllables.pop()
+                else:
+                    last_syl = ""
+                listSyllables.append(last_syl + temp_str)
                 temp_str = ""
-    for j in listSyllables:
-        print j
+
     return listSyllables
 
 
@@ -52,16 +73,16 @@ def parse_to_couplet_text(song):
     couplet = ""
     i = 0
     while i < len(song):
-       if song[i] == "\n" or song[i] == "\r\n":
-           couplet += song[i]
-           if i+1 < len(song):
-               if song[i+1] == "\n" or song[i+1] == "\r\n":
-                   if not couplet == "":
-                       list_couplets.append(couplet)
-                       couplet = ""
-       else:
-           couplet += song[i]
-       i += 1
+        if song[i] == "\n" or song[i] == "\r\n" or song[i] == "\n\r":
+            couplet += song[i]
+            if i+1 < len(song):
+                if song[i+1] == "\n" or song[i+1] == "\r\n":
+                    if not couplet == "":
+                        list_couplets.append(couplet)
+                        couplet = ""
+        else:
+            couplet += song[i]
+        i += 1
     if not couplet == "":
         list_couplets.append(couplet)
     return list_couplets
@@ -73,45 +94,70 @@ def parse_to_list_of_string(base_chord, string):
     :param base_chord:
     :param string:
     """
-    temp_str=""
     list_of_strings = []
-    for i in string.split('\n'):
-        word_list = []
-        pos = 0
-        for j in i:
-            if not j == " " or pos == len(i)-1:
-                temp_str += j
-            else:
-                word_list.append((temp_str, len(temp_str) - pos + 1))
-            pos += 1
-        #проверим - строка с аккордами?
-        is_chord = True
-        for word in word_list:
-            if word[0] not in all_chords:
-                is_chord = False
-        if is_chord:
-            chord_list = []
-            for chords in word_list:
-                chord = Chord(semitone_distance(base_chord, chords[0]), get_modif(chords[0]))
-                chord_list.append((chord, chords[1]))
-            list_of_strings.append(chord)
-        else:
-            syl_list = []
-            for words in word_list:
-                syl_list += parse_to_syl(words)
-                syl_list += Space()
-            list_of_strings.append(syl_list)
+    for i in string.splitlines():
+        tokens = tokenize(i)
+        list_of_strings.append(list(make_chords(base_chord, tokens)))
     return list_of_strings
 
 
+def tokenize(string):
+    index = 0
+    word = []
+    for i in string:
+        word.append(i)
+        if i.isspace():
+            yield ("".join(word), index - len(word))
+            word = []
+        index += 1
+    yield ("".join(word), index - len(word))
+
+
+
+def make_chords(base, tokens):
+    for word, pos in tokens:
+        if word.lower() in all_chords:
+            yield (Chord(semitone_distance(base, word)), pos)
+        else:
+            yield (word, pos)
+
+
+
+def optimize_tokens(tokens):
+    """
+    Ожидаем что tokens - это пары (Chord, position) или (Str, position)
+    :param tokens:
+    """
+    if chords_only(tokens):
+        return [(chord, pos) for chord, pos in tokens if isinstance(chord, Chord)]
+    else:
+        optimized_tokens = []
+
+        for word, pos in tokens:
+            if isinstance(word, Chord):
+                optimized_tokens.append((word, pos))
+            elif not word.isspace():
+                if optimized_tokens:
+                    optimized_tokens.append((" ", pos-1))
+                for syl in parse_to_syl(word):
+                    optimized_tokens.append((syl, pos))
+                    pos += len(syl)
+
+        return optimized_tokens
+
+
 def create_couplet(list_of_string):
-    for i, string in enumerate(list_of_string):
+    i = 0
+    while i < len(list_of_string):
+        string = list_of_string[i]
         if chords_only(string) and i+1 < len(list_of_string):
             for part in join_chords(string, list_of_string[i+1]):
                 yield part
+            i += 1
         else:
             for part in parts_of_string(string):
                 yield part
+        i += 1
 
 
 def parts_of_string(string):
@@ -121,10 +167,18 @@ def parts_of_string(string):
         else:
             yield SongPart(part)
 
+    yield EndOfLine()
+
 
 def chords_only(string):
-    for chord in string:
-        if not isinstance(chord[0], Chord):
+    """
+    Проверяем, в строке только аккорды?
+    :param string:
+    :return: False - если в строке есть что-нибудь кроме аккордов,
+    иначе True
+    """
+    for chord, pos in string:
+        if not isinstance(chord, Chord) and not chord.isspace():
             return False
     return True
 
@@ -134,7 +188,7 @@ def join_chords(chords, words):
     while i < len(chords) and j < len(words):
         chord, word = chords[i], words[j]
         cpos, wpos, wlen = chord[1], word[1], len(word[0])
-        if cpos >= wpos and cpos < wpos + wlen:
+        if cpos >= wpos and cpos < (wpos + wlen):
             j += 1
             i += 1
             yield SongPart(word[0], chord[0])
@@ -144,14 +198,16 @@ def join_chords(chords, words):
             yield SongPart("", chord[0])
         elif cpos >= wpos+wlen:
             j += 1
-            yield SongPart(words[j][0])
+            yield SongPart(word[0])
 
     while i < len(chords):
-        i += 1
         yield SongPart("", chords[i][0])
+        i += 1
 
     while j < len(words):
+        yield SongPart((words[j])[0])
         j += 1
-        yield SongPart(words[j][0])
+
+    yield EndOfLine()
 
 
