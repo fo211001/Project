@@ -5,13 +5,18 @@ from chord import Chord
 from distance import semitone_distance
 from song import Song
 from couplet import Couplet
-from all_chords import all_chord_types, all_chords, all_chord_tones, tones_indexed, get_modif, get_tone
+from all_chords import all_chords, get_modif, get_tone, is_chord, normal_view
 
 vowels = [u'а', u'е', u'ё', u'и', u'о', u'у', u'ы', u'э', u'ю', u'я',
           u'А', u'Е', u'Ё', u'И', u'О', u'У', u'Ы', u'Э', u'Ю', u'Я']
 
 
 def parse_text(text):
+    """
+    Парсим из текста песни с аккордами в пересенную класса Song
+    :param text:
+    :return:
+    """
     list_of_couplets_text = parse_to_couplet_text(text)
     list_of_couplets = []
     list_of_couplets_tokens = []
@@ -105,19 +110,23 @@ def tokenize(string):
     index = 0
     word = []
     for i in string:
-        word.append(i)
         if i.isspace():
-            yield ("".join(word), index - len(word))
+            if word:
+                yield ("".join(word), index - len(word))
             word = []
+        else:
+            word.append(i)
         index += 1
+
     yield ("".join(word), index - len(word))
 
 
 
 def make_chords(base, tokens):
     for word, pos in tokens:
-        if word.lower() in all_chords:
-            yield (Chord(semitone_distance(base, word)), pos)
+        if is_chord(word.lower()):
+            word = normal_view(word)
+            yield (Chord(semitone_distance(base, word), get_modif(word)), pos)
         else:
             yield (word, pos)
 
