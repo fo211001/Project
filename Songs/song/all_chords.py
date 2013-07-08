@@ -31,8 +31,10 @@ def normal_view(chord_string):
         converted_tone = all_chord_tones[sin_tones[get_tone(chord_string)]]
         return converted_tone + get_modif(chord_string)
 
+
 def get_all_chord_tones():
     return all_chord_tones
+
 
 def get_tone(chord):
     if u"#" in chord or u"b" in chord:
