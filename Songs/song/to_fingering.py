@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 from all_chords import get_all_chord_tones
 from distance import semitone_distance
 from itertools import product
@@ -38,34 +39,139 @@ def return_fingerings_from_chords(names_chords):
 # ["E", "H", "G", "D", "A", "E"]
 # all_chord_tones = ["A", "B", "H", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"]
 
-
-def create_all_notes(line_up):
-    notes = get_all_chord_tones()
+def check_on_dist_between_tones(all_fingerings):
     var_fing = []
-    fing_for_note = []
-    for note in notes:
-        for note_on_line in line_up:
-            num = semitone_distance(note_on_line, note)
-            if num < 0:
-                num += 12
-            fing_for_note.append(num)
-        for i in fing_for_note:
-            num2 = i + 12
-            if 11 < num2 < 15:
-                fing_for_note.append(num2)
-        var_fing.append(fing_for_note)
-        fing_for_note = []
-    print var_fing
+    for fing in all_fingerings:
+        is_wrong = False
+        i = 0
+        while i < len(fing):
+            j = i + 1
+            while j < len(fing):
+                if not (fing[i] == 'x' or fing[j] == 'x'):
+                    if abs(int(fing[i]) - int(fing[j])) >= 6:
+                        is_wrong = True
+                j += 1
+            i += 1
+        if not is_wrong:
+            var_fing.append(fing)
     return var_fing
 
 
-def finger(line_up):
-    all_fingering = create_all_notes(line_up)
-    i = 0
-    p = (["{} {}".format(x, y).lower() for x, y in product(all_fingering[0], all_fingering[0], all_fingering[0], all_fingering[0], all_fingering[0], all_fingering[0]])
-    for pri in p:
-        print pri
+def check_on_identic_fingerings(all_fingerings):
+    for i, f in enumerate(all_fingerings):
+        j = i + 1
+        while j < len(all_fingerings):
+            if not f == all_fingerings[j]:
+                del all_fingerings[j]
+            j += 1
+    return all_fingerings
+
+
+
+def return_need_fingerings(all_fingerings, all_notes, line_up):
+    notes = all_notes
+    chords = get_all_chord_tones()
+    out_fingerings = []
+    for fingering in all_fingerings:
+        one_fingering = []
+        n = 0
+        notes = all_notes
+        for i, tune in enumerate(fingering):
+            cord = line_up[i]  # i=0 --> cord="E"
+            # dist = 12 - int(tune)  # получили 4
+            pos_cord = chords.index(cord)  #получили 7
+            d = pos_cord + int(tune)
+            if d >= 12:
+                d = d - 12
+            note_from_fing = chords[d]
+            j = 0
+            temp_notes = []
+            was_adding = False
+            while j < len(notes):
+                if notes[j] == note_from_fing:
+                    one_fingering.append(tune)
+                    was_adding = True
+                    n += 1
+                else:
+                    temp_notes.append(notes[j])
+                j += 1
+            if not was_adding:
+                one_fingering.append('x')
+            notes = temp_notes
+        if not len(one_fingering) == 6:
+            print "Ошибка"
+        if len(all_notes) <= n:
+            out_fingerings.append(one_fingering)
+    # print len(out_fingerings)
+    f = check_on_identic_fingerings(out_fingerings)
+    # print len(f)
+    print f
+    fing = check_on_dist_between_tones(f)
+    return fing
+
+
+def create_all_notes(line_up, notes):
+    """Принимает строй.
+    Возвращает список из 6 элементов,
+    в котором i элементу соответствует i струна, каждый
+    такой элемент в свою очередь состоит из кортежа из 12 элементов,
+    в котором j элементу соответстсвует j нота (список нот по порядку сверху)"""
+    # notes = get_all_chord_tones()
+    fingering = []
+    list_fingerings = []
+    for cord in line_up:
+        for note in notes:
+            part_fing = semitone_distance(cord, note)
+            if part_fing < 0:
+                part_fing += 12
+            fingering.append(part_fing)
+        list_fingerings.append(fingering)
+        fingering = []
+    print list_fingerings
+    # return list_fingerings
+    all_variables_fingering = (["{}, {}".format(x, y).lower() for x, y in product(
+                                                                                product(
+                                                                                    product(
+                                                                                        product(
+                                                                                            product(
+                                                                                                list_fingerings[0], list_fingerings[1]),
+                                                                                            list_fingerings[2]),
+                                                                                        list_fingerings[3]),
+                                                                                    list_fingerings[4]),
+                                                                                list_fingerings[5])
+                               ])
+    var_fing_not_par = []
+    for var in all_variables_fingering:
+        not_par = ""
+        for i in var:
+            if not (i == "(" or i == ")"):
+                not_par += i
+        # not_par = "(" + not_par + ")"
+        var_fing_not_par.append(not_par.split(", "))
+    print var_fing_not_par
+    return return_need_fingerings(var_fing_not_par, notes, line_up)
+
+
+def to_fingering (notes, line_up = ["E", "H", "G", "D", "A", "E"]):
+    """Принимает ноты.
+    Возвращает список из всех возможных аппликатур поданных нот"""
+    all_variables_fingering = create_all_notes(line_up, notes)
+    for f in all_variables_fingering:
+        print f
         print ""
+    # print all_variables_fingering
+
+
+
+
+
+# def finger(line_up):
+#     all_fingering = create_all_notes(line_up)
+#     i = 0
+#     p = (["{} {}".format(x, y).lower() for x, y in product(all_fingering[0], all_fingering[0], all_fingering[0], all_fingering[0], all_fingering[0], all_fingering[0]])
+#     for pri in p:
+#         print pri
+#         print ""
 
 #
     # var_fing = []

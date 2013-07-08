@@ -5,7 +5,7 @@ from song.couplet import Couplet
 from song.song_part import SongPart, Space, EndOfLine
 from song.distance import semitone_distance, get_chord
 from song.parse import parse_text
-from song.to_fingering import finger
+from song.to_fingering import to_fingering
 
 #FD
 def help():
@@ -66,10 +66,10 @@ if __name__ == "__main__":
             song = parse_text(text)
             print_song(song, song.base_chord)
         elif command == "fingering":
-            finger(["E", "H", "G", "D", "A", "E"])
-            # notes = raw_input().split(" ")
+            print "Введите ноты для получения аппликатур"
+            notes = raw_input().split(" ")
+            to_fingering(notes)
 
-            # print "Введите список имен аккордов"
             # names_chords = list(raw_input())
             # list_fing = return_fingerings_from_chords(names_chords)
             # for fing in list_fing:
