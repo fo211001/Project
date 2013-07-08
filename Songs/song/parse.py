@@ -127,7 +127,6 @@ def tokenize(string):
     yield ("".join(word), index - len(word))
 
 
-
 def make_chords(base, tokens):
     for word, pos in tokens:
         if is_chord(word.lower()):
@@ -141,7 +140,6 @@ def make_chords(base, tokens):
             yield (Chord(distance, modif, add_distance), pos)
         else:
             yield (word, pos)
-
 
 
 def optimize_tokens(tokens):
