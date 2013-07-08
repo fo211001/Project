@@ -9,14 +9,20 @@ def semitone_distance(first_chord, second_chord):
         dist += 12
     return dist
 
+
 def shift_tone(base_tone, distance):
     t = (tones_indexed[base_tone] + distance) % 12
     return all_chord_tones[t]
 
+
 def get_chord(base, chord):
     "Возвращаем название аккорда"
     try:
-        return shift_tone(get_tone(base), chord.distance) + chord.modification
+        tone = shift_tone(get_tone(base), chord.distance)
+        if chord.add_tone:
+            return tone + chord.modification + "/" + shift_tone(tone, chord.add_tone)
+        else:
+            return tone + chord.modification
     except AttributeError as error:
         print "Broken on {}\n{}".format(chord, base)
 

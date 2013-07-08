@@ -21,6 +21,10 @@ class Chord(object):
     def modification(self):
         return self._modification
 
+    @property
+    def add_tone(self):
+        return self._add_note
+
     # def set_fingering(self, base_chord):
     #     d = dict_with_fingering()
     #     name_chord = get_tone(get_chord(base_chord, self))
