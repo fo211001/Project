@@ -35,7 +35,6 @@ def parse_text(text):
         for tokens in couplet:
             optimized = list(make_chords(base_chord, tokens))
             optimized = optimize_tokens(optimized)
-            print optimized
             chorded_list.append(optimized)
         list_of_couplets.append(Couplet(list(create_couplet(chorded_list))))
 
