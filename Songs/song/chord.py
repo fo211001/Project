@@ -4,9 +4,10 @@ from all_chords import get_tone
 
 
 class Chord(object):
-    def __init__(self, dist, modif=""):
+    def __init__(self, dist, modif="", add_note=None):
         self._distance = dist
         self._modification = modif
+        self._add_note = add_note
   #      self._fingering = self.set_fingering(base_chord)
 
     def __repr__(self):
