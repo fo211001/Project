@@ -5,7 +5,7 @@ from chord import Chord
 from distance import semitone_distance
 from song import Song
 from couplet import Couplet
-from all_chords import all_chords, get_modif, get_tone, is_chord, normal_view
+from all_chords import all_chords, get_modif, get_tone, is_chord, normal_view, get_add_note, parse_chord
 
 vowels = [u'а', u'е', u'ё', u'и', u'о', u'у', u'ы', u'э', u'ю', u'я',
           u'А', u'Е', u'Ё', u'И', u'О', u'У', u'Ы', u'Э', u'Ю', u'Я']
@@ -17,6 +17,7 @@ def parse_text(text):
     :param text:
     :return:
     """
+    text = text.replace(u'\ufeff', '')
     list_of_couplets_text = parse_to_couplet_text(text)
     list_of_couplets = []
     list_of_couplets_tokens = []
@@ -46,8 +47,13 @@ def get_base_chord(list_of_couplets_tokens):
     for couplet in list_of_couplets_tokens:
         for tokens in couplet:
             for token, pos in tokens:
-                if token.lower() in all_chords:
-                    return get_tone(token)
+                chord = token.split("/")
+                if len(chord) > 1 and chord[1] != "9":
+                    if chord[0].lower() in all_chords:
+                        return get_tone(chord[0])
+                else:
+                    if token.lower() in all_chords:
+                        return get_tone(token)
 
     return None
 
@@ -125,8 +131,14 @@ def tokenize(string):
 def make_chords(base, tokens):
     for word, pos in tokens:
         if is_chord(word.lower()):
-            word = normal_view(word)
-            yield (Chord(semitone_distance(base, word), get_modif(word)), pos)
+            chord, modif, add_note = parse_chord(word)
+            chord = normal_view(chord)
+            distance = semitone_distance(base, chord)
+            if add_note:
+                add_distance = semitone_distance(chord, add_note)
+            else:
+                add_distance = 0
+            yield (Chord(distance, modif, add_distance), pos)
         else:
             yield (word, pos)
 
@@ -189,7 +201,7 @@ def chords_only(string):
     for chord, pos in string:
         if not isinstance(chord, Chord) and not chord.isspace() and chord:
             return False
-    return True
+    return len(string)
 
 
 def join_chords(chords, words):
