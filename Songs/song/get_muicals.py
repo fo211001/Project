@@ -1,5 +1,5 @@
-from distance import shift_tone
-from all_chords import all_chord_tones, get_modif, get_tone
+from distance import shift_tone, semitone_distance
+from all_chords import get_modif, get_tone
 
 modifications = {
     "": (0, 4, 7),
@@ -28,13 +28,31 @@ modifications = {
 
 
 def mus(chord):
+    mod = get_modif(chord)
+    tone = get_tone(chord)
+    return [shift_tone(tone, x)for x in modifications[mod]]
+
+
+def parse_modifications(base_chord, chord):
 
     tone = get_tone(chord)
-    mod = get_modif(chord)
-    return [shift_tone(tone, x)
-            for x in modifications[mod]]
+    print tone
+    temp_str = ""
+    mod_list = []
+    for i in mod:
+        if i == "/":
+            mod_list.append(temp_str)
+            temp_str = ""
+        else:
+            temp_str += i
+            if i == mod[-1]:
+                mod_list.append(temp_str)
+    add_mod = get_tone(mod_list.pop())
+    print semitone_distance(tone, add_mod)
+    print  mod_list
 
-    #     tone = chord[0]
+parse_modifications("Ddim7/A")
+            #     tone = chord[0]
     #     mod = chord.modification
     #     elif mod == "6/9":
     #         tone1 = 4
