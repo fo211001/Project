@@ -67,7 +67,6 @@ def check_on_identic_fingerings(all_fingerings):
     return all_fingerings
 
 
-
 def return_need_fingerings(all_fingerings, all_notes, line_up):
     notes = all_notes
     chords = get_all_chord_tones()
@@ -78,11 +77,11 @@ def return_need_fingerings(all_fingerings, all_notes, line_up):
         notes = all_notes
         for i, tune in enumerate(fingering):
             cord = line_up[i]  # i=0 --> cord="E"
-            # dist = 12 - int(tune)  # получили 4
             pos_cord = chords.index(cord)  #получили 7
-            d = pos_cord + int(tune)
-            if d >= 12:
-                d = d - 12
+            d = semitone_distance(pos_cord, int(tune))
+            #     pos_cord + int(tune)
+            # if d >= 12:
+            #     d = d - 12
             note_from_fing = chords[d]
             j = 0
             temp_notes = []
@@ -110,52 +109,29 @@ def return_need_fingerings(all_fingerings, all_notes, line_up):
     return fing
 
 
-def create_all_notes(line_up, notes):
-    """Принимает строй.
-    Возвращает список из 6 элементов,
-    в котором i элементу соответствует i струна, каждый
-    такой элемент в свою очередь состоит из кортежа из 12 элементов,
-    в котором j элементу соответстсвует j нота (список нот по порядку сверху)"""
-    # notes = get_all_chord_tones()
-    fingering = []
+def create_all_notes(line_up, notes, filters):
+    """Принимает строй, ноты и список из объектов фильтров"""
     list_fingerings = []
     for cord in line_up:
-        for note in notes:
-            part_fing = semitone_distance(cord, note)
-            if part_fing < 0:
-                part_fing += 12
-            fingering.append(part_fing)
-        list_fingerings.append(fingering)
         fingering = []
-    print list_fingerings
-    # return list_fingerings
-    all_variables_fingering = (["{}, {}".format(x, y).lower() for x, y in product(
-                                                                                product(
-                                                                                    product(
-                                                                                        product(
-                                                                                            product(
-                                                                                                list_fingerings[0], list_fingerings[1]),
-                                                                                            list_fingerings[2]),
-                                                                                        list_fingerings[3]),
-                                                                                    list_fingerings[4]),
-                                                                                list_fingerings[5])
-                               ])
-    var_fing_not_par = []
-    for var in all_variables_fingering:
-        not_par = ""
-        for i in var:
-            if not (i == "(" or i == ")"):
-                not_par += i
-        # not_par = "(" + not_par + ")"
-        var_fing_not_par.append(not_par.split(", "))
-    print var_fing_not_par
-    return return_need_fingerings(var_fing_not_par, notes, line_up)
+        for note in notes:
+            fingering.append(semitone_distance(cord, note))
+        fingering.append('x')
+        list_fingerings.append(fingering)
+    for i in product(*list_fingerings):
+        okay = True
+        for filter in filters:
+            if not filter.filter(i):
+                okay = False
+                break
+        if okay:
+            yield i
 
 
-def to_fingering (notes, line_up = ["E", "H", "G", "D", "A", "E"]):
+def to_fingering(notes,  filters=[], line_up=["E", "H", "G", "D", "A", "E"]):
     """Принимает ноты.
     Возвращает список из всех возможных аппликатур поданных нот"""
-    all_variables_fingering = create_all_notes(line_up, notes)
+    all_variables_fingering = create_all_notes(line_up, notes, filters)
     for f in all_variables_fingering:
         print f
         print ""

@@ -6,6 +6,7 @@ from song.song_part import SongPart, Space, EndOfLine
 from song.distance import semitone_distance, get_chord
 from song.parse import parse_text
 from song.to_fingering import to_fingering
+from song.filters import DistFilter, JustBarreFilter, WithoutCordsFilter, AllNeedNotesFilter, WithoutBarreFilter
 
 #FD
 def help():
@@ -68,7 +69,13 @@ if __name__ == "__main__":
         elif command == "fingering":
             print "Введите ноты для получения аппликатур"
             notes = raw_input().split(" ")
-            to_fingering(notes)
+            default_filt = AllNeedNotesFilter(notes)
+            dist_filt = DistFilter(3)
+            barre_filt = JustBarreFilter(notes)
+            not_barre_filt = WithoutBarreFilter(notes)
+            not_cords_filt = WithoutCordsFilter([0])  # указываем на единицу меньше желаемой, сейчас без 1-ой струны
+            filters = [default_filt, dist_filt, barre_filt]
+            to_fingering(notes, filters)
 
             # names_chords = list(raw_input())
             # list_fing = return_fingerings_from_chords(names_chords)
