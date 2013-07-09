@@ -36,18 +36,33 @@ def print_couplet(couplet, main_chord):
             for c in string_chords:
                 if c != '' and c != ' ' and c != '  ' and c != '   ' and c != '    ' and c != '     ' and c != '      ':
                     usl = True
-            # [' '], [' ', '\r\n'], ['   ', '    ', ' ', '\r\n'], [' ', ' ', '   ', ' ', '  ', ' ', '  ', '     ', ' ', '\r\n'], [' ', '\r\n'], ['  ', '  ', '   ', ' ', '  ', ' ', '  ', '  ', ' ', '\r\n']
-            if usl:
-                string_chords.append("\r\n")
+                    break
+            usl0 = False
+            for s in string_words:
+                if s != '' and s != ' ' and s != '  ' and s != '   ' and s != '    ' and s != '     ' and s != '      ' and s != "\n":
+                    usl0 = True
+            if usl0:
+                if usl:
+                    string_chords.append("\r\n")
+                else:
+                    string_chords = ["\r"]
             else:
-                string_chords = ["\r"]
+                if usl:
+                    string_words = ["\r\n"]
+                else:
+                    string_chords = ["\r"]
             lines.append("".join(string_chords + string_words))
             string_chords = []
             string_words = []
+    for i, line in enumerate(lines):
+        if i+1 < len(lines):
+            if (line == "\r\n" and lines[i+1] == "\r\n") or (line == "\n" and lines[i+1] == "\n"):
+                lines.remove(lines[i+1])
     return "".join(lines)
 
 
 def print_song(song, base_chord):
     for i in song.couplets:
         p = print_couplet(i, base_chord)
-        print p,
+        if p != "\r\n" and p != "\n\r" and p != "\n":
+            print p,
