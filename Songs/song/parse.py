@@ -170,9 +170,14 @@ def create_couplet(list_of_string):
     while i < len(list_of_string):
         string = list_of_string[i]
         if chords_only(string) and i+1 < len(list_of_string):
-            for part in join_chords(string, list_of_string[i+1]):
-                yield part
-            i += 1
+            if not chords_only(list_of_string[i+1]):
+                for part in join_chords(string, list_of_string[i+1]):
+                    yield part
+                i += 1
+            else:
+                for part in join_chords(string, [("", 0)]):
+                    yield part
+
         else:
             for part in parts_of_string(string):
                 yield part
