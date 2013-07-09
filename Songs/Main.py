@@ -6,7 +6,8 @@ from song.song_part import SongPart, Space, EndOfLine
 from song.distance import semitone_distance, get_chord
 from song.parse import parse_text
 from song.to_fingering import to_fingering
-from song.filters import DistFilter, JustBarreFilter, WithoutCordsFilter, AllNeedNotesFilter, WithoutBarreFilter
+from song.filters import DistFilter, JustBarreFilter, WithoutCordsFilter,\
+    AllNeedNotesFilter, WithoutBarreFilter, JustAllCordsFilter
 
 #FD
 def help():
@@ -52,8 +53,6 @@ def print_couplet(couplet, main_chord):
 
 def print_song(song, base_chord):
     for i in song.couplets:
-        # for part in i.song_parts:
-        #     print
         print print_couplet(i, base_chord)
 
 
@@ -69,24 +68,30 @@ if __name__ == "__main__":
         elif command == "fingering":
             print "Введите ноты для получения аппликатур"
             notes = raw_input().split(" ")
+            # print "Укажите какие аппликатуры необходимо вывести с учетом следующих параметров."
+            # print "Если какой-либо из фильтров вам не нужен, то нажимайте Enter."
+            # all_filters = ["Расстояние между струнами (число/Enter):", "Вывести только баррэ (да/Enter)",
+            #                "Вывести только без баррэ (да/Enter)", "Обязательно все струны (да/Enter)",
+            #                "Без струн (1 2/Enter)"]
+            # need_filters = []
+            # for string_filter in all_filters:
+            #     print string_filter
+            #     f = raw_input().split(" ")
+            #     if f != None and f != "\n":
+            #         need_filters.append(f)
+            #     else:
+            #         need_filters.append(None)
+            # for i, filt in enumerate(need_filters):
+            #     if filt != None:
+            #         if i == 0:
             default_filt = AllNeedNotesFilter(notes)
             dist_filt = DistFilter(3)
             barre_filt = JustBarreFilter(notes)
             not_barre_filt = WithoutBarreFilter(notes)
+            all_cords = JustAllCordsFilter()
             not_cords_filt = WithoutCordsFilter([0])  # указываем на единицу меньше желаемой, сейчас без 1-ой струны
-            filters = [default_filt, dist_filt, barre_filt]
+            filters = [default_filt, dist_filt]
             to_fingering(notes, filters)
-
-            # names_chords = list(raw_input())
-            # list_fing = return_fingerings_from_chords(names_chords)
-            # for fing in list_fing:
-            #     if fing:
-            #         print fing
-            #         print ""
-            #song = Song("A", [Couplet([SongPart(u"как", Chord(3, "sus7"))])])
-            #couplets = song.couplets
-            #part = couplets[0].song_parts
-            #print part[0].chord.fingering
         elif command == "input":
             text = raw_input("Введите песню\n")
             song = Song(text)

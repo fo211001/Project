@@ -67,14 +67,37 @@ class WithoutBarreFilter(AppFilter):
         for index_barre in probably_indexes_barre:
             if index_barre == min(*fingering):
                 is_barre = True
-        # if is_barre:
-        #     count = 0
-        #     for i in fingering:
-        #         if i != min(*fingering) and i != 'x':
-        #             count += 1
-        #     if count != len(self.notes):
-        #         is_barre = False
-        return not is_barre
+        if is_barre:
+            count = 0
+            for i in fingering:
+                if i != min(*fingering) and i != 'x':
+                    count += 1
+            if count != len(self.notes):
+                is_barre = False
+        if not is_barre:
+            b = self.counter_of_fingers(fingering)
+            return b
+        else:
+            return False
+
+    def counter_of_fingers(self, fingering):
+        count = 0
+        for chord in fingering:
+            if chord != 'x':
+                count += 1
+        if count < 5:
+            return True
+        else:
+            return False
+
+
+class JustAllCordsFilter(AppFilter):
+
+    def filter(self, fingering):
+        for chord in fingering:
+            if chord == 'x':
+                return False
+        return True
 
 
 class WithoutCordsFilter(AppFilter):
@@ -116,18 +139,3 @@ class AllNeedNotesFilter(AppFilter):
             if notes_from_fing.count(note) == 0:
                 return False
         return True
-
-            # j = 0
-            # temp_notes = []
-            # was_adding = False
-            # while j < len(notes):
-            #     if notes[j] == note_from_fing:
-            #         one_fingering.append(tune)
-            #         was_adding = True
-            #         n += 1
-            #     else:
-            #         temp_notes.append(notes[j])
-            #     j += 1
-            # if not was_adding:
-            #     one_fingering.append('x')
-            # notes = temp_notes
