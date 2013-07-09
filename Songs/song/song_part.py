@@ -2,6 +2,7 @@
 
 from chord import Chord
 
+
 class SongPart(object):
     
     def __init__(self,  syllable="", chord=None):
