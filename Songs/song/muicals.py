@@ -37,11 +37,13 @@ def mus(chord):
     """
     mod = get_modif(chord)                                  # достаем модификацию
     tone = get_tone(chord)                                  # достаем тон аккорда
-    note = semitone_distance(tone, get_add_note(chord))     # достаем расстояние от основного аккорда до доп.ноты
-    modifications[mod] = list(modifications[mod])           #
-    modifications[mod].append(note)                         # добавляем ноту к модификации
-    tuple(modifications[mod])
+    note = get_add_note(chord)
+    if note:
+        dist = semitone_distance(tone, note)
+        modifications[mod] = list(modifications[mod])
+        modifications[mod].append(dist)                         # добавляем ноту к модификации
+        tuple(modifications[mod])
     return [shift_tone(tone, x) for x in modifications[mod]]
 
 
-# mus("F/D")
+# mus("F")

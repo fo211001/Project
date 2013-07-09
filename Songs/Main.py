@@ -5,6 +5,7 @@ from song.to_fingering import to_fingering
 from song.filters import DistFilter, JustBarreFilter, WithoutCordsFilter,\
     AllNeedNotesFilter, WithoutBarreFilter, JustAllCordsFilter
 from song.print_song import print_song
+from song.muicals import mus
 
 
 def help():
@@ -12,7 +13,8 @@ def help():
            + "input - ввести песню самостоятельно\n" \
            + "addk - добавить куплет\n" \
            + "exit - выйти из программы\n"\
-           + "fingering - аппликатура нот\n"
+           + "fingering - аппликатура нот\n"\
+           + "chord - ноты аккорда"
 
 
 if __name__ == "__main__":
@@ -20,13 +22,17 @@ if __name__ == "__main__":
     while True:
         command = raw_input("»")
         if command == "read":
-            file = open("2.txt")
+            file = open("1.txt")
             text = file.read().decode('utf-8')
             song = parse_text(text)
             print_song(song, song.base_chord)
-        elif command == "fingering":
-            print "Введите ноты для получения аппликатур"
-            notes = raw_input().split(" ")
+        elif command == "chord":
+            print "Введите аккорд"
+            akkord = raw_input()
+            notes = mus(akkord)
+        # elif command == "fingering":
+        #    print "Введите ноты для получения аппликатур"
+        #    notes = raw_input().split(" ")
             # print "Укажите какие аппликатуры необходимо вывести с учетом следующих параметров."
             # print "Если какой-либо из фильтров вам не нужен, то нажимайте Enter."
             # all_filters = ["Расстояние между струнами (число/Enter):", "Вывести только баррэ (да/Enter)",

@@ -139,8 +139,6 @@ def to_fingering(notes,  filters=[], line_up=["E", "H", "G", "D", "A", "E"]):
 
 
 
-
-
 # def finger(line_up):
 #     all_fingering = create_all_notes(line_up)
 #     i = 0
