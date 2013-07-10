@@ -30,11 +30,10 @@ all_chord_types = {
     "madd9": (0, 4, 7, 21)
 }
 
-all_types_with_add_note = ["{}{}".format(x, y).lower() for x, y in product(all_chord_types, all_chord_types)]
 
 all_chord_tones = ["A", "B", "H", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"]
 
-all_chords = set([u"{}{}".format(x, y).lower() for x, y in product(all_chord_tones, all_chord_types)])
+all_chords = set([u"{}{}".format(x, y).lower() for x, y in product(all_chord_tones, all_chord_types.keys())])
 
 tones_indexed = {x: i for i, x in enumerate(all_chord_tones)}
 
@@ -43,7 +42,7 @@ sin_tones = {"Ab": 11, "Bb": 0, "Hb": 1, "Cb": 2, "Db": 4, "Eb": 6, "Fb": 7, "Gb
 
 sin_chord_tones = sin_tones.keys()
 
-all_sin = set(["{}{}".format(x, y).lower() for x, y in product(sin_chord_tones, all_chord_types)])
+all_sin = set(["{}{}".format(x, y).lower() for x, y in product(sin_chord_tones, all_chord_types.keys())])
 
 
 def is_chord(chord_string):
@@ -105,7 +104,7 @@ def parse_chord(chord):
 
 
 def semitone_distance(first_chord, second_chord):
-    """Возвращаем число полутонов от первого до 2-го аккорда"""
+    "Возвращаем число полутонов от первого до 2-го аккорда"
     dist = (tones_indexed[get_tone(normal_view(second_chord))] - tones_indexed[get_tone(normal_view(first_chord))]) % 12
     if dist < 0:
         dist += 12

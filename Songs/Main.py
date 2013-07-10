@@ -5,9 +5,8 @@ from song.fingering.filters import (
     AllNotesNeededFilter, WithoutBarreFilter, OnlyAllCordsFilter
 )
 from song.fingering import iterate_fingerings
-from song.text import couplet_text
+from song.text import print_song
 from song.chord import musicals
-
 
 def help():
     return """
@@ -27,7 +26,7 @@ if __name__ == "__main__":
             f = open("1.txt")
             text = f.read().decode('utf-8')
             song = parse_text(text)
-            couplet_text(song, song.base_chord)
+            print print_song(song, song.base_chord)
         elif command == "chord":
             print "Введите аккорд"
             akkord = raw_input()
