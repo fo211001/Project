@@ -1,10 +1,11 @@
 #-*- coding: utf-8 -*-
+from song.song import Song
 from song.parse import parse_text
-from song.fingering import iterate_fingerings
-from Songs.song.fingering.filters import DistFilter, JustBarreFilter, WithoutCordsFilter,\
+from song.to_fingering import to_fingering
+from song.filters import DistFilter, JustBarreFilter, WithoutCordsFilter,\
     AllNeedNotesFilter, WithoutBarreFilter, JustAllCordsFilter
 from song.print_song import print_song
-from song.muisicals import mus
+from song.muicals import mus
 
 
 def help():
@@ -23,7 +24,7 @@ if __name__ == "__main__":
             file = open("1.txt")
             text = file.read().decode('utf-8')
             song = parse_text(text)
-            print print_song(song, song.base_chord)
+            print_song(song, song.base_chord)
         elif command == "chord":
             print "Введите аккорд"
             akkord = raw_input()
@@ -35,10 +36,7 @@ if __name__ == "__main__":
             all_cords = JustAllCordsFilter()
             not_cords_filt = WithoutCordsFilter([0])  # указываем на единицу меньше желаемой, сейчас без 1-ой струны
             filters = [default_filt, dist_filt, barre_filt]
-            fingerings = iterate_fingerings(notes, filters)
-            for fingering in fingerings:
-                print fingering
-                print ""
+            to_fingering(notes, filters)
         elif command == "input":
             text = raw_input("Введите песню\n")
             song = parse_text(text)
