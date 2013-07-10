@@ -11,12 +11,23 @@ def semitone_distance(first_chord, second_chord):
 
 
 def shift_tone(base_tone, distance):
+    """
+
+    :param base_tone:   Базовый тон
+    :param distance:    Число полутонов от базового тона
+    :return:            Тон на заданном расстоянии от базового
+    """
     t = (tones_indexed[base_tone] + distance) % 12
     return all_chord_tones[t]
 
 
 def get_chord(base, chord):
-    "Возвращаем название аккорда"
+    """
+
+    :param base:    Базовый тон
+    :param chord:   Принимаем объект типа Chord
+    :return:        Возвращаем аккорд в виде строки
+    """
     try:
         tone = shift_tone(get_tone(base), chord.distance)
         if chord.add_tone:
