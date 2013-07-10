@@ -5,7 +5,7 @@ from song.to_fingering import to_fingering
 from song.filters import DistFilter, JustBarreFilter, WithoutCordsFilter,\
     AllNeedNotesFilter, WithoutBarreFilter, JustAllCordsFilter
 from song.print_song import print_song
-from song.muicals import mus
+from song.all_chords import musicals
 
 
 def help():
@@ -28,7 +28,7 @@ if __name__ == "__main__":
         elif command == "chord":
             print "Введите аккорд"
             akkord = raw_input()
-            notes = mus(akkord)
+            notes = musicals(akkord)
             default_filt = AllNeedNotesFilter(notes)
             dist_filt = DistFilter(3)
             barre_filt = JustBarreFilter(notes)
