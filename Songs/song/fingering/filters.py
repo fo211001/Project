@@ -1,6 +1,5 @@
 #-*- coding: utf-8 -*-
-from all_chords import get_all_chord_tones
-from distance import semitone_distance
+from Songs.song.all_chords import get_all_chord_tones
 
 
 class AppFilter(object):

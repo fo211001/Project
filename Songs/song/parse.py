@@ -40,6 +40,7 @@ def parse_text(text):
         list_of_couplets.append(Couplet(list(create_couplet(chorded_list))))
 
     song = Song(base_chord, list_of_couplets)
+
     return song
 
 
