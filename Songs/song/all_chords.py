@@ -31,8 +31,11 @@ def is_chord(chord_string):
         if len(chord_and_add_note) > 2:
             return False
         add_tone = chord_and_add_note[1]
-        if add_tone not in map(lambda x: x.lower(), all_chord_tones) \
-            and add_tone not in map(lambda x: x.lower(), all_chord_tones) and add_tone != "9":
+        if (
+            add_tone not in map(lambda x: x.lower(), all_chord_tones) and
+            add_tone not in map(lambda x: x.lower(), sin_tones.keys()) and
+            add_tone != "9"
+        ):
             return False
     return chord_and_add_note[0] in all_chords or chord_and_add_note[0] in all_sin
 
