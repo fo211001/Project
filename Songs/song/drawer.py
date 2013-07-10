@@ -10,7 +10,18 @@ coordinate = {
     4: [490, 4]
 }
 first_pos = {
-    1: ()
+    1: "1.png",
+    2: "2.png",
+    3: "3.png",
+    4: "4.png",
+    5: "5.png",
+    6: "6.png",
+    7: "7.png",
+    8: "8.png",
+    9: "9.png",
+    10: "10.png",
+    11: "11.png",
+    12: "12.png"
 }
 
 
@@ -32,10 +43,15 @@ def aplicatura(spisok):
     draw.line((0, 0, 35, 35), fill="red", width=7)
     draw.line((35, 0, 0, 35), fill="red", width=7)
 
+    # рисуем лад
+    min_lad = min(spisok)
+    posicion = Image.open(first_pos[min_lad])
+    draw = ImageDraw.Draw(posicion)
     aplic = Image.open("Grif.png")
     draw = ImageDraw.Draw(aplic)
     spisok = list(spisok)
-    min_lad = min(spisok)
+
+
     for i, lad in enumerate(spisok):
         lad -= (min_lad - 1)
         x = coordinate[lad][0]
@@ -44,8 +60,11 @@ def aplicatura(spisok):
             draw.bitmap((x, y), cross, fill="red")
         else:
             draw.bitmap((x, y), finger, fill="red")
+        draw
         aplic.save("aplicatura.png", "PNG")
     del draw
-        # aplic.save(sys.stdout, "JPEG")
+    aplic.close()
+    posicion.close()
 
-aplicatura(spisok=(2, 3, 2, 4, 5, 3))
+
+aplicatura(spisok=(1, 1, 2, 3, 3, 1))
