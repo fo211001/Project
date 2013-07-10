@@ -1,5 +1,5 @@
 #-*- coding: utf-8 -*-
-from Songs.song.distance import semitone_distance
+from Songs.song.all_chords import semitone_distance
 from itertools import product
 
 

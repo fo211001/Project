@@ -1,5 +1,5 @@
 #-*- coding: utf-8 -*-
-from Songs.song.all_chords import get_all_chord_tones
+from Songs.song.all_chords import shift_tone
 
 
 class AppFilter(object):
@@ -24,7 +24,7 @@ class DistFilter(AppFilter):
         return is_good
 
 
-class JustBarreFilter(AppFilter):
+class OnlyBarreFilter(AppFilter):
     notes = []
 
     def __init__(self, notes):
@@ -57,40 +57,15 @@ class WithoutBarreFilter(AppFilter):
         self.notes = notes
 
     def filter(self, fingering):
-        is_barre = False
-        probably_indexes_barre = []
-        for i, c in enumerate(fingering):
-            for j in xrange(i+1, len(fingering)):
-                if c == fingering[j]:
-                    probably_indexes_barre.append(c)
-        for index_barre in probably_indexes_barre:
-            if index_barre == min(*fingering):
-                is_barre = True
-        if is_barre:
-            count = 0
-            for i in fingering:
-                if i != min(*fingering) and i != 'x':
-                    count += 1
-            if count != len(self.notes):
-                is_barre = False
-        if not is_barre:
-            b = self.counter_of_fingers(fingering)
-            return b
-        else:
-            return False
-
-    def counter_of_fingers(self, fingering):
-        count = 0
-        for chord in fingering:
-            if chord != 'x':
-                count += 1
-        if count < 5:
-            return True
+        barre = OnlyBarreFilter(self.notes)
+        if not barre.filter(fingering):
+            count = CountOfFingersFilter()
+            return count.filter(fingering)
         else:
             return False
 
 
-class JustAllCordsFilter(AppFilter):
+class OnlyAllCordsFilter(AppFilter):
 
     def filter(self, fingering):
         for chord in fingering:
@@ -114,7 +89,7 @@ class WithoutCordsFilter(AppFilter):
         return is_good
 
 
-class AllNeedNotesFilter(AppFilter):
+class AllNotesNeededFilter(AppFilter):
     line_up = ["E", "H", "G", "D", "A", "E"]
     notes = None
 
@@ -122,19 +97,22 @@ class AllNeedNotesFilter(AppFilter):
         self.notes = notes
 
     def filter(self, fingering):
-        notes_from_fing = []
-        chords = get_all_chord_tones()
-        for i, tune in enumerate(fingering):
-            cord = self.line_up[i]  # i=0 --> cord="E"
-            pos_cord = chords.index(cord)  # получили 7
-            if tune != 'x':
-                d = pos_cord + int(tune)
-                if d >= 12:
-                    d -= 12
-                notes_from_fing.append(chords[d])
-            else:
-                notes_from_fing.append(tune)
-        for note in self.notes:
-            if notes_from_fing.count(note) == 0:
-                return False
-        return True
+        played_notes = [shift_tone(self.line_up[i], int(tune)) for i, tune in enumerate(fingering) if tune != 'x']
+        return set(played_notes) == set(self.notes)
+
+
+class CountOfFingersFilter(AppFilter):
+
+    def __init__(self, max_count_of_fingers=4):
+        self.max_count_of_fingers = max_count_of_fingers
+
+    def filter(self, fingering):
+        count = 0
+        for chord in fingering:
+            if chord != 'x':
+                count += 1
+        if count <= self.max_count_of_fingers:
+            return True
+        else:
+            return False
+

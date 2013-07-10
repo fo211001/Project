@@ -2,10 +2,9 @@
 
 from song_part import SongPart, Space, EndOfLine
 from chord import Chord
-from distance import semitone_distance
 from song import Song
 from couplet import Couplet
-from all_chords import all_chords, get_modif, get_tone, is_chord, normal_view, get_add_note, parse_chord
+from all_chords import all_chords, get_tone, is_chord, normal_view, parse_chord, semitone_distance
 
 vowels = [u'а', u'е', u'ё', u'и', u'о', u'у', u'ы', u'э', u'ю', u'я',
           u'А', u'Е', u'Ё', u'И', u'О', u'У', u'Ы', u'Э', u'Ю', u'Я']

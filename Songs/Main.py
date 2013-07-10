@@ -1,19 +1,23 @@
 #-*- coding: utf-8 -*-
 from song.song import Song
 from song.parse import parse_text
-from song.to_fingering import to_fingering
-from song.filters import DistFilter, JustBarreFilter, WithoutCordsFilter,\
-    AllNeedNotesFilter, WithoutBarreFilter, JustAllCordsFilter
+from song.fingering.filters import (
+    DistFilter, OnlyBarreFilter, WithoutCordsFilter,
+    AllNotesNeededFilter, WithoutBarreFilter, OnlyAllCordsFilter
+)
+from song.fingering import iterate_fingerings
 from song.print_song import print_song
-from song.muicals import mus
+from song.muisicals import mus
 
 
 def help():
-    return "read - прочитать песню из файла\n" \
-           + "input - ввести песню самостоятельно\n" \
-           + "addk - добавить куплет\n" \
-           + "exit - выйти из программы\n"\
-           + "chord - аппликатуры аккорда"
+    return """
+    read - прочитать песню из файла
+    input - ввести песню самостоятельно
+    addk - добавить куплет
+    exit - выйти из программы
+    chord - аппликатуры аккорда
+    """
 
 
 if __name__ == "__main__":
@@ -29,14 +33,14 @@ if __name__ == "__main__":
             print "Введите аккорд"
             akkord = raw_input()
             notes = mus(akkord)
-            default_filt = AllNeedNotesFilter(notes)
+            default_filt = AllNotesNeededFilter(notes)
             dist_filt = DistFilter(3)
-            barre_filt = JustBarreFilter(notes)
+            barre_filt = OnlyBarreFilter(notes)
             not_barre_filt = WithoutBarreFilter(notes)
-            all_cords = JustAllCordsFilter()
+            all_cords = OnlyAllCordsFilter()
             not_cords_filt = WithoutCordsFilter([0])  # указываем на единицу меньше желаемой, сейчас без 1-ой струны
-            filters = [default_filt, dist_filt, barre_filt]
-            to_fingering(notes, filters)
+            filters = [default_filt, dist_filt, not_barre_filt]
+            print "\r\n".join((",".join((unicode(z) for z in x)) for x in iterate_fingerings(notes, filters)))
         elif command == "input":
             text = raw_input("Введите песню\n")
             song = parse_text(text)

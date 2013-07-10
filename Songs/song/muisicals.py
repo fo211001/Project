@@ -1,5 +1,5 @@
 #-*- coding: utf-8 -*-
-from distance import shift_tone, semitone_distance
+from all_chords import shift_tone, semitone_distance
 from all_chords import get_modif, get_tone, get_add_note
 
 modifications = {
