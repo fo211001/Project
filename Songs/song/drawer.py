@@ -9,8 +9,8 @@ coordinate = {
     3: [350, 4],
     4: [490, 4]
 }
-ladi = {
-
+first_pos = {
+    1: ()
 }
 
 
