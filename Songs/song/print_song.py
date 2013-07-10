@@ -23,7 +23,15 @@ def print_couplet(couplet, main_chord):
                     sep = " "
                 else:
                     next_part = couplet.song_parts[i+1]
-                    sep = "-" if not next_part.is_space else " "
+                    if next_part.chord:
+                        sep = "-" if not next_part.is_space else " "
+                    else:
+                        sep = ""
+                        string = ""
+                        for j, st in enumerate(chord_str):
+                            if j != len(chord_str) - 1:
+                                string += st
+                        chord_str = string
             else:
                 sep = ""
             syl += sep * (len(chord_str) - len(syl))
