@@ -1,10 +1,10 @@
 #-*- coding: utf-8 -*-
 
-from song_part import SongPart, Space, EndOfLine
-from chord import Chord
+from song_part import SongPart, EndOfLine
+from song_chord import Chord
 from song import Song
 from couplet import Couplet
-from all_chords import all_chords, get_tone, is_chord, normal_view, parse_chord, semitone_distance
+from chord import get_tone, is_chord, normal_view, parse_chord, semitone_distance
 
 vowels = [u'а', u'е', u'ё', u'и', u'о', u'у', u'ы', u'э', u'ю', u'я',
           u'А', u'Е', u'Ё', u'И', u'О', u'У', u'Ы', u'Э', u'Ю', u'Я']
@@ -49,10 +49,10 @@ def get_base_chord(list_of_couplets_tokens):
             for token, pos in tokens:
                 chord = token.split("/")
                 if len(chord) > 1 and chord[1] != "9":
-                    if chord[0].lower() in all_chords:
+                    if chord[0].lower() in chord:
                         return get_tone(chord[0])
                 else:
-                    if token.lower() in all_chords:
+                    if token.lower() in chord:
                         return get_tone(token)
 
     return None

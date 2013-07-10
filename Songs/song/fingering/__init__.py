@@ -1,6 +1,7 @@
 #-*- coding: utf-8 -*-
-from Songs.song.all_chords import semitone_distance
 from itertools import product
+
+from song.chord import semitone_distance
 
 
 def iterate_fingerings(notes,  filters=None, line_up=["E", "H", "G", "D", "A", "E"]):

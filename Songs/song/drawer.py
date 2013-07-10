@@ -26,7 +26,7 @@ first_pos = {
 
 
 # создаем апликатуру
-def aplicatura(spisok):
+def image_fingering(spisok):
     # Рисуем палец
     finger = Image.new("RGBA", (35, 35), (0, 0, 0, 0))
     draw = ImageDraw.Draw(finger)
@@ -60,11 +60,7 @@ def aplicatura(spisok):
             draw.bitmap((x, y), cross, fill="red")
         else:
             draw.bitmap((x, y), finger, fill="red")
-        draw
-        aplic.save("aplicatura.png", "PNG")
+        aplic.save("image_fingering.png", "PNG")
     del draw
-    aplic.close()
-    posicion.close()
 
 
-aplicatura(spisok=(1, 1, 2, 3, 3, 1))

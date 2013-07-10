@@ -1,13 +1,12 @@
 #-*- coding: utf-8 -*-
-from song.song import Song
 from song.parse import parse_text
 from song.fingering.filters import (
     DistFilter, OnlyBarreFilter, WithoutCordsFilter,
     AllNotesNeededFilter, WithoutBarreFilter, OnlyAllCordsFilter
 )
 from song.fingering import iterate_fingerings
-from song.print_song import print_song
-from song.muisicals import mus
+from song.text import couplet_text
+from song.chord import musicals
 
 
 def help():
@@ -25,14 +24,14 @@ if __name__ == "__main__":
     while True:
         command = raw_input("»")
         if command == "read":
-            file = open("1.txt")
-            text = file.read().decode('utf-8')
+            f = open("1.txt")
+            text = f.read().decode('utf-8')
             song = parse_text(text)
-            print_song(song, song.base_chord)
+            couplet_text(song, song.base_chord)
         elif command == "chord":
             print "Введите аккорд"
             akkord = raw_input()
-            notes = mus(akkord)
+            notes = musicals(akkord)
             default_filt = AllNotesNeededFilter(notes)
             dist_filt = DistFilter(3)
             barre_filt = OnlyBarreFilter(notes)
@@ -44,7 +43,7 @@ if __name__ == "__main__":
         elif command == "input":
             text = raw_input("Введите песню\n")
             song = parse_text(text)
-            print_song(song, song.base_chord)
+            couplet_text(song, song.base_chord)
         elif command == "addk":
             couplet = raw_input("Введите куплет\n")
         elif command == "help":

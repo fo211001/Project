@@ -1,6 +1,6 @@
 #-*- coding: utf-8 -*-
 
-from chord import Chord
+from song_chord import Chord
 
 
 class SongPart(object):

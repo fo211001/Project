@@ -1,5 +1,5 @@
 #-*- coding: utf-8 -*-
-from Songs.song.all_chords import shift_tone
+from song.chord import shift_tone
 
 
 class AppFilter(object):

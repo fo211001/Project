@@ -1,6 +1,18 @@
 #-*- coding: utf-8 -*-
 from song_part import EndOfLine
-from distance import get_chord
+from chord import get_tone, shift_tone
+
+
+def chord_text(base, chord):
+    "Возвращаем название аккорда"
+    try:
+        tone = shift_tone(get_tone(base), chord.distance)
+        if chord.add_tone:
+            return tone + chord.modification + "/" + shift_tone(tone, chord.add_tone)
+        else:
+            return tone + chord.modification
+    except AttributeError as error:
+        print "Broken on {}\n{}".format(chord, base)
 
 
 def couplet_text(couplet, main_chord):
@@ -31,9 +43,9 @@ def couplet_text(couplet, main_chord):
         if chord:
             next_part = couplet.song_parts[i+1]
             if next_part.chord:
-                chord_str = get_chord(main_chord, chord) + " "
+                chord_str = chord_text(main_chord, chord) + " "
             else:
-                chord_str = get_chord(main_chord, chord)
+                chord_str = chord_text(main_chord, chord)
         if len(chord_str) > len(syl):
             if i+1 < len(couplet.song_parts):
                 if syl == '':
