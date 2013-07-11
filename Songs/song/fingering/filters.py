@@ -65,28 +65,15 @@ class WithoutBarreFilter(AppFilter):
             return False
 
 
-class OnlyAllCordsFilter(AppFilter):
+class WithCordsFilter(AppFilter):
+    def __init__(self, cords=None):
+        self.with_cords = set(cords or [])
 
     def filter(self, fingering):
-        for chord in fingering:
-            if chord == 'x':
+        for i, chord in enumerate(fingering):
+            if i in self.with_cords and chord == 'x':
                 return False
         return True
-
-
-class WithoutCordsFilter(AppFilter):
-    without_cords = []
-
-    def __init__(self, cords):
-        self.without_cords = cords
-
-    def filter(self, fingering):
-        is_good = True
-        for i, chord in enumerate(fingering):
-            if i in self.without_cords:
-                if not chord == 'x':
-                    is_good = False
-        return is_good
 
 
 class AllNotesNeededFilter(AppFilter):
@@ -102,7 +89,6 @@ class AllNotesNeededFilter(AppFilter):
 
 
 class CountOfFingersFilter(AppFilter):
-
     def __init__(self, max_count_of_fingers=4):
         self.max_count_of_fingers = max_count_of_fingers
 
@@ -115,4 +101,16 @@ class CountOfFingersFilter(AppFilter):
             return True
         else:
             return False
+
+
+class TunesFilter(AppFilter):
+    def __init__(self, min_tune=0, max_tune=14):
+        self.min_tune = min_tune
+        self.max_tune = max_tune
+
+    def filter(self, fingering):
+        for chord in fingering:
+            if chord < self.min_tune or chord > self.max_tune:
+                return False
+        return True
 
