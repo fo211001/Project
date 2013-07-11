@@ -29,8 +29,8 @@ if __name__ == "__main__":
             print couplet_text(song, song.base_chord)
         elif command == "chord":
             print "Введите аккорд"
-            akkord = raw_input()
-            notes = musicals(akkord)
+            chord = raw_input()
+            notes = musicals(chord)
             default_filt = AllNotesNeededFilter(notes)
             dist_filt = DistFilter(3)
             barre_filt = OnlyBarreFilter(notes)
