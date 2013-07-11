@@ -12,7 +12,6 @@ def help():
     return """
     read - прочитать песню из файла
     input - ввести песню самостоятельно
-    addk - добавить куплет
     exit - выйти из программы
     chord - аппликатуры аккорда
     """
@@ -43,8 +42,6 @@ if __name__ == "__main__":
             text = raw_input("Введите песню\n")
             song = parse_text(text)
             couplet_text(song, song.base_chord)
-        elif command == "addk":
-            couplet = raw_input("Введите куплет\n")
         elif command == "help":
             print help()
         elif command == "exit":
