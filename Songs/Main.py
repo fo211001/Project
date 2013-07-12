@@ -2,11 +2,13 @@
 from song.parse import parse_text
 from song.fingering.filters import (
     DistFilter, OnlyBarreFilter, WithCordsFilter,
-    AllNotesNeededFilter, WithoutBarreFilter, TunesFilter
+    AllNotesNeededFilter, WithoutBarreFilter, CountOfFingersFilter
 )
 from song.fingering import iterate_fingerings
-from song.text import couplet_text
+from song.text import couplet_text, print_song
 from song.chord import musicals
+from song.drawer import image_fingering
+
 
 def help():
     return """
@@ -25,7 +27,7 @@ if __name__ == "__main__":
             f = open("1.txt")
             text = f.read().decode('utf-8')
             song = parse_text(text)
-            print couplet_text(song, song.base_chord)
+            print print_song(song, song.base_chord)
         elif command == "chord":
             print "Введите аккорд"
             chord = raw_input()
@@ -34,10 +36,12 @@ if __name__ == "__main__":
             dist_filt = DistFilter(3)
             barre_filt = OnlyBarreFilter(notes)
             not_barre_filt = WithoutBarreFilter(notes)
-            cords_filt = WithCordsFilter([0, 1, 2, 3, 4, 5])  # указываем на единицу меньше желаемых
-            tunes_filt = TunesFilter(2, 9)
-            filters = [default_filt, dist_filt, tunes_filt]
+            all_cords = CountOfFingersFilter()
+            not_cords_filt = WithCordsFilter([0])  # указываем на единицу меньше желаемой, сейчас без 1-ой струны
+            filters = [default_filt, dist_filt, not_barre_filt]
             print "\r\n".join((",".join((unicode(z) for z in x)) for x in iterate_fingerings(notes, filters)))
+            for j, fingering in enumerate(iterate_fingerings(notes, filters)):
+                image_fingering(fingering, j)
         elif command == "input":
             text = raw_input("Введите песню\n")
             song = parse_text(text)
