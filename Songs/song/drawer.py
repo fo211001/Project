@@ -4,10 +4,10 @@ from PIL import Image, ImageDraw
 coordinate = {
     "x": [0, 0],
     0: [-100, 0],
-    1: [70, 4],
-    2: [210, 4],
-    3: [350, 4],
-    4: [490, 4]
+    1: [80, 4],
+    2: [220, 4],
+    3: [360, 4],
+    4: [500, 4]
 }
 # 1
 one = Image.new("RGBA", (50, 35), (0, 0, 0, 0))
@@ -110,9 +110,15 @@ draw = ImageDraw.Draw(cross)
 draw.line((0, 0, 35, 35), fill="red", width=7)
 draw.line((35, 0, 0, 35), fill="red", width=7)
 
+# 1 струна
+struna = Image.new("RGBA", (35, 35), (0, 0, 0, 0))
+draw = ImageDraw.Draw(struna)
+draw.line((20, 0, 20, 35), fill="black", width=5)
+
 
 # создаем апликатуру
 def image_fingering(fingering, j):
+    # позиция
     posicion = first_pos[min(fingering)]
     draw = ImageDraw.Draw(posicion)
     # рисуем гриф гитары
@@ -131,11 +137,13 @@ def image_fingering(fingering, j):
             draw.bitmap((x, y), finger, fill="red")
 
         griff.save("song\image_fingering" + str(j) + ".png", "PNG")
+    # рисуем струну
+    draw.bitmap((0, 205), struna, fill="black")
     # рисуем лад
-    draw.bitmap((67, 245), posicion, fill="black")
+    draw.bitmap((75, 246), posicion, fill="black")
     # сохраняем
     griff.save("song\image_fingering" + str(j) + ".png", "PNG")
     del draw
 
-
+image_fingering((1, 1, 1, 1, 1, 1), j=2)
 
