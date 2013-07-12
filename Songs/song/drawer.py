@@ -1,14 +1,16 @@
 #-*- coding: utf-8 -*-
 from PIL import Image, ImageDraw
+import os
 
 coordinate = {
-    "x": [0, 0],
+    "x": [40, 0],
     0: [-100, 0],
     1: [80, 4],
     2: [220, 4],
     3: [360, 4],
     4: [500, 4]
 }
+
 # 1
 one = Image.new("RGBA", (50, 35), (0, 0, 0, 0))
 draw = ImageDraw.Draw(one)
@@ -51,11 +53,11 @@ draw.line((40, 0, 40, 35), fill="black", width=6)
 # 8
 eight = Image.new("RGBA", (50, 40), (0, 0, 0, 0))
 draw = ImageDraw.Draw(eight)
-draw.line((2, 0, 23, 35), fill="black", width=6)
-draw.line((16, 0, 23, 35), fill="black", width=6)
+draw.line((2, 0, 9, 35), fill="black", width=6)
+draw.line((16, 0, 9, 35), fill="black", width=6)
 draw.line((30, 0, 30, 35), fill="black", width=6)
-draw.line((40, 0, 40, 35), fill="black", width=6)
-draw.line((50, 0, 50, 35), fill="black", width=6)
+draw.line((38, 0, 38, 35), fill="black", width=6)
+draw.line((48, 0, 48, 35), fill="black", width=6)
 # 9
 nine = Image.new("RGBA", (50, 40), (0, 0, 0, 0))
 draw = ImageDraw.Draw(nine)
@@ -83,6 +85,7 @@ draw.line((45, 0, 45, 35), fill="black", width=6)
 # 0
 zero = Image.new("RGBA", (50, 40), (0, 0, 0, 0))
 draw = ImageDraw.Draw(zero)
+
 first_pos = {
     0: zero,
     1: one,
@@ -117,33 +120,32 @@ draw.line((20, 0, 20, 35), fill="black", width=5)
 
 
 # создаем апликатуру
-def image_fingering(fingering, j):
+def image_fingering(fingering):
     # позиция
     posicion = first_pos[min(fingering)]
     draw = ImageDraw.Draw(posicion)
     # рисуем гриф гитары
-    griff = Image.open("song\Grif.png", "r")
+    griff = Image.open(os.path.join((os.path.dirname("Grif.png")), "Grif.png"), "r")
     draw = ImageDraw.Draw(griff)
+    # рисуем струну
+    draw.bitmap((0, 205), struna, fill="black")
     fingering = list(fingering)
-
     # рисуем апликатуру
     for i, lad in enumerate(fingering):
         if lad == "x":
             draw.bitmap((coordinate["x"][0], 203.5 - i * 41.5), cross, fill="red")
         else:
-            lad -= (min(fingering) - 1)
+            lad -= min(fingering) - 1
             x = coordinate[lad][0]
             y = coordinate[lad][1] + 203.5 - i * 41.5
             draw.bitmap((x, y), finger, fill="red")
+        griff.save(os.path.join(str(fingering) + ".png"), "PNG")
 
-        griff.save("song\image_fingering" + str(j) + ".png", "PNG")
-    # рисуем струну
-    draw.bitmap((0, 205), struna, fill="black")
     # рисуем лад
     draw.bitmap((75, 246), posicion, fill="black")
     # сохраняем
-    griff.save("song\image_fingering" + str(j) + ".png", "PNG")
+    griff.save(os.path.join(str(fingering) + ".png"), "PNG")
     del draw
 
-image_fingering((1, 1, 1, 1, 1, 1), j=2)
+# image_fingering((1, 1, 1, 1, 1, 1))
 

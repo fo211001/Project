@@ -40,8 +40,8 @@ if __name__ == "__main__":
             not_cords_filt = WithCordsFilter([0])  # указываем на единицу меньше желаемой, сейчас без 1-ой струны
             filters = [default_filt, dist_filt, not_barre_filt]
             print "\r\n".join((",".join((unicode(z) for z in x)) for x in iterate_fingerings(notes, filters)))
-            for j, fingering in enumerate(iterate_fingerings(notes, filters)):
-                image_fingering(fingering, j)
+            for fingering in iterate_fingerings(notes, filters):
+                image_fingering(fingering)
         elif command == "input":
             text = raw_input("Введите песню\n")
             song = parse_text(text)
